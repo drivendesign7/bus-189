@@ -1,0 +1,79 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="refresh" content="60">
+<title>189 Bus Tracker</title>
+
+<style>
+body {
+  font-family: Arial;
+  background: white;
+  text-align: center;
+  margin: 0;
+  padding-top: 50px;
+}
+
+h1 {
+  font-size: 70px;
+  margin-bottom: 40px;
+}
+
+.time {
+  font-size: 140px;
+  font-weight: bold;
+  margin: 40px 0;
+}
+
+.small {
+  font-size: 24px;
+  opacity: 0.5;
+}
+</style>
+
+<script>
+const STOP_URL = "https://www.transsee.ca/stop?ttc=123456";
+const PROXY = "https://api.allorigins.win/raw?url=" + encodeURIComponent(STOP_URL);
+
+function loadBusTimes() {
+  var xhr = new XMLHttpRequest();
+  xhr.open("GET", PROXY, true);
+
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4) {
+      if (xhr.status === 200) {
+        var text = xhr.responseText;
+
+        var matches = text.match(/(\d+)\s*min/g) || [];
+        var times = matches.slice(0, 3);
+
+        document.getElementById("t0").innerText = times[0] || "—";
+        document.getElementById("t1").innerText = times[1] || "—";
+        document.getElementById("t2").innerText = times[2] || "—";
+      } else {
+        document.getElementById("t0").innerText = "No data";
+      }
+    }
+  };
+
+  xhr.send();
+}
+
+window.onload = loadBusTimes;
+setInterval(loadBusTimes, 60000);
+</script>
+
+</head>
+
+<body>
+
+<h1>189 BUS</h1>
+
+<div class="time" id="t0">--</div>
+<div class="time" id="t1">--</div>
+<div class="time" id="t2">--</div>
+
+<div class="small">updates every 60 seconds</div>
+
+</body>
+</html>

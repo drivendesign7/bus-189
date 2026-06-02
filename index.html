@@ -3,48 +3,90 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="refresh" content="60">
-<title>TTC 189 Live</title>
+<title>189 Bus Tracker</title>
 
-<!-- 👇 THIS is where your CSS goes -->
 <style>
 body {
   font-family: Arial;
-  background: white;
   margin: 0;
-  text-align: center;
-  padding-top: 60px;
+  height: 100vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  background: white;
 }
 
 h1 {
-  font-size: 80px;
+  position: absolute;
+  top: 20px;
+  width: 100%;
+  text-align: center;
+  font-size: 60px;
+  margin: 0;
 }
 
 .time {
-  font-size: 150px;
+  font-size: 140px;
   font-weight: bold;
 }
 
 .small {
-  font-size: 22px;
+  position: absolute;
+  bottom: 20px;
+  width: 100%;
+  text-align: center;
+  font-size: 20px;
   opacity: 0.5;
 }
 </style>
 
-<!-- scripts go here too -->
 <script>
-  // your JavaScript here
+
+const URL = "https://www.transsee.ca/predict?s=ttc.189.4873";
+const PROXY = "https://api.allorigins.win/raw?url=" + encodeURIComponent(URL);
+
+async function loadBus() {
+  try {
+    const res = await fetch(PROXY);
+    const text = await res.text();
+
+    // Try to find ANY "X min" patterns
+    let matches = text.match(/\d+\s*min/g);
+
+    if (!matches || matches.length === 0) {
+      document.getElementById("t0").innerText = "189";
+      document.getElementById("t1").innerText = "NO DATA";
+      document.getElementById("t2").innerText = "";
+      return;
+    }
+
+    document.getElementById("t0").innerText = matches[0] || "—";
+    document.getElementById("t1").innerText = matches[1] || "—";
+    document.getElementById("t2").innerText = matches[2] || "—";
+
+  } catch (e) {
+    document.getElementById("t0").innerText = "189";
+    document.getElementById("t1").innerText = "NO DATA";
+  }
+}
+
+window.onload = loadBus;
+setInterval(loadBus, 60000);
+
 </script>
 
 </head>
 
 <body>
 
-<!-- visible stuff goes here -->
 <h1>189 BUS</h1>
 
 <div class="time" id="t0">--</div>
 <div class="time" id="t1">--</div>
 <div class="time" id="t2">--</div>
+
+<div class="small">refreshes every 60 seconds</div>
 
 </body>
 </html>

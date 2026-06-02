@@ -4,9 +4,7 @@
   <meta charset="utf-8">
   <title>TTC Board</title>
 
-  <!-- Recommended Kindle refresh rate -->
   <meta http-equiv="refresh" content="60">
-
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <style>
@@ -16,18 +14,24 @@
       color: #000;
       margin: 0;
       text-align: center;
+      white-space: nowrap; /* forces horizontal behavior */
+    }
+
+    .block {
+      display: inline-block;
+      vertical-align: top;
+      margin: 40px 30px;
     }
 
     .label {
       font-size: 40px;
       font-weight: bold;
-      margin-top: 60px;
+      margin-bottom: 10px;
     }
 
     .time {
       font-size: 220px;
       font-weight: bold;
-      margin: 10px 0 80px 0;
       line-height: 1;
     }
   </style>
@@ -35,14 +39,20 @@
 
 <body>
 
-  <div class="label">NEXT</div>
-  <div class="time">5</div>
+  <div class="block">
+    <div class="label">NEXT</div>
+    <div class="time">5</div>
+  </div>
 
-  <div class="label">NEXT</div>
-  <div class="time">21</div>
+  <div class="block">
+    <div class="label">NEXT</div>
+    <div class="time">21</div>
+  </div>
 
-  <div class="label">NEXT</div>
-  <div class="time">44</div>
+  <div class="block">
+    <div class="label">NEXT</div>
+    <div class="time">44</div>
+  </div>
 
 </body>
 </html>

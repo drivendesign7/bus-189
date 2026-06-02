@@ -2,46 +2,42 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>TTC Kindle Dashboard</title>
+  <title>TTC Kindle Board</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <style>
     body {
       font-family: Arial, sans-serif;
-      background: #fff;
+      margin: 18px;
       color: #000;
-      margin: 20px;
+      background: #fff;
     }
 
     h1 {
       font-size: 22px;
-      margin-bottom: 5px;
+      margin-bottom: 10px;
     }
 
-    .sub {
-      font-size: 13px;
-      margin-bottom: 20px;
-      color: #333;
-    }
-
-    .card {
-      display: block;
+    .stop {
       border: 2px solid #000;
-      padding: 16px;
+      padding: 14px;
       margin: 12px 0;
-      text-decoration: none;
-      color: #000;
+    }
+
+    .route {
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    .times {
+      margin-top: 6px;
       font-size: 16px;
     }
 
-    .card:hover {
-      background: #f2f2f2;
-    }
-
-    .note {
+    .small {
       font-size: 12px;
-      margin-top: 30px;
-      color: #444;
+      margin-top: 20px;
+      color: #333;
       line-height: 1.4;
     }
   </style>
@@ -49,31 +45,29 @@
 
 <body>
 
-  <h1>TTC Stop Dashboard</h1>
-  <div class="sub">Kindle-friendly quick access (no login, no map loading)</div>
+  <h1>TTC Stop 7361</h1>
 
-  <!-- MAIN STOP -->
-  <a class="card"
-     href="https://bustime.ttc.ca/map?stpid=bustime:7361">
-    Stop 7361 — Open Live Arrivals
-  </a>
+  <div class="stop">
+    <div class="route">Route 189 — Westbound</div>
+    <div class="times">
+      Next: 7 min<br>
+      Next: 21 min<br>
+      Next: 38 min
+    </div>
+  </div>
 
-  <!-- OPTIONAL: direct fallback -->
-  <a class="card"
-     href="https://bustime.ttc.ca/">
-    Open TTC Bus Time (fallback view)
-  </a>
+  <div class="stop">
+    <div class="route">Route 189 — Eastbound</div>
+    <div class="times">
+      Next: 5 min<br>
+      Next: 18 min<br>
+      Next: 33 min
+    </div>
+  </div>
 
-  <!-- OPTIONAL: route search fallback -->
-  <a class="card"
-     href="https://bustime.ttc.ca/">
-    Search Routes / Plan Trip
-  </a>
-
-  <div class="note">
-    If the live map doesn’t load properly on Kindle, use the fallback link above.<br><br>
-
-    Tip: Kindle browsers struggle with real-time maps. This page is just a fast launcher.
+  <div class="small">
+    ⚠ Times are manual. Update from your phone when needed.<br>
+    This page is designed to work even on Kindle’s broken browser.
   </div>
 
 </body>

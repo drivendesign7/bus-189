@@ -1,42 +1,38 @@
 <script>
 
-const STOP_URL = "https://www.transsee.ca/predict?s=ttc.189.4873";
+const URL = "https://www.transsee.ca/predict?s=ttc.189.4873";
 
-function buildProxy(url) {
-  return "https://api.allorigins.win/raw?url=" + encodeURIComponent(url);
-}
-
-async function loadBusTimes() {
-
+async function load() {
   try {
-    const res = await fetch(buildProxy(STOP_URL));
+    const res = await fetch(URL);
     const text = await res.text();
 
-    // 🔥 NEW SMART MATCH (TransSee format)
-    // matches: "1: 3 Mins", "2: 14 Mins", etc
-    const matches = [...text.matchAll(/(\d+:\s*\d+\s*Mins)/gi)];
+    // grab ANY numbers that look like arrival minutes
+    const numbers = text.match(/\b\d{1,2}\b/g);
 
-    let times = matches.map(m => {
-      // extract just the minutes number
-      let num = m[0].match(/(\d+)\s*Mins/i);
-      return num ? num[1] + " min" : null;
-    }).filter(Boolean);
-
-    if (times.length === 0) {
-      document.getElementById("t0").innerText = "NO DATA";
+    if (!numbers || numbers.length === 0) {
+      document.getElementById("t0").innerText = "189";
+      document.getElementById("t1").innerText = "NO DATA";
+      document.getElementById("t2").innerText = "";
       return;
     }
 
-    document.getElementById("t0").innerText = times[0] || "—";
-    document.getElementById("t1").innerText = times[1] || "—";
-    document.getElementById("t2").innerText = times[2] || "—";
+    // filter likely arrival times (1–60 min range)
+    const mins = numbers
+      .map(n => parseInt(n))
+      .filter(n => n > 0 && n < 60);
+
+    document.getElementById("t0").innerText = (mins[0] ?? "—") + " min";
+    document.getElementById("t1").innerText = (mins[1] ?? "—") + " min";
+    document.getElementById("t2").innerText = (mins[2] ?? "—") + " min";
 
   } catch (e) {
-    document.getElementById("t0").innerText = "NO DATA";
+    document.getElementById("t0").innerText = "189";
+    document.getElementById("t1").innerText = "NO DATA";
   }
 }
 
-window.onload = loadBusTimes;
-setInterval(loadBusTimes, 60000);
+window.onload = load;
+setInterval(load, 60000);
 
 </script>

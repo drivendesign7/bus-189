@@ -2,43 +2,54 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>TTC Kindle Board</title>
+  <title>TTC Stop 7361</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <style>
     body {
       font-family: Arial, sans-serif;
+      background: #ffffff;
+      color: #000000;
       margin: 18px;
-      color: #000;
-      background: #fff;
     }
 
     h1 {
       font-size: 22px;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
 
-    .stop {
+    .subtitle {
+      font-size: 13px;
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    .block {
       border: 2px solid #000;
       padding: 14px;
-      margin: 12px 0;
+      margin-bottom: 14px;
     }
 
     .route {
       font-size: 18px;
       font-weight: bold;
+      margin-bottom: 6px;
     }
 
     .times {
-      margin-top: 6px;
       font-size: 16px;
+      line-height: 1.5;
     }
 
-    .small {
+    .footer {
       font-size: 12px;
-      margin-top: 20px;
-      color: #333;
+      margin-top: 25px;
+      color: #444;
       line-height: 1.4;
+    }
+
+    .label {
+      font-weight: bold;
     }
   </style>
 </head>
@@ -46,28 +57,39 @@
 <body>
 
   <h1>TTC Stop 7361</h1>
+  <div class="subtitle">Static Kindle dashboard (manual updates only)</div>
 
-  <div class="stop">
+  <div class="block">
     <div class="route">Route 189 — Westbound</div>
     <div class="times">
-      Next: 7 min<br>
-      Next: 21 min<br>
-      Next: 38 min
+      Next: 4 min<br>
+      Next: 18 min<br>
+      Next: 35 min
     </div>
   </div>
 
-  <div class="stop">
+  <div class="block">
     <div class="route">Route 189 — Eastbound</div>
     <div class="times">
-      Next: 5 min<br>
-      Next: 18 min<br>
-      Next: 33 min
+      Next: 6 min<br>
+      Next: 22 min<br>
+      Next: 41 min
     </div>
   </div>
 
-  <div class="small">
-    ⚠ Times are manual. Update from your phone when needed.<br>
-    This page is designed to work even on Kindle’s broken browser.
+  <div class="block">
+    <div class="route">Status</div>
+    <div class="times">
+      Last updated: 10:45 PM<br>
+      Stop ID: 7361
+    </div>
+  </div>
+
+  <div class="footer">
+    ✔ Works on Kindle browser because it uses only static HTML<br>
+    ✔ No JavaScript, no live loading, no external dependencies<br><br>
+
+    To update: edit this file and replace the arrival times.
   </div>
 
 </body>

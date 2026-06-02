@@ -2,7 +2,11 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>TTC Eastbound</title>
+  <title>TTC</title>
+
+  <!-- Refresh every 30 seconds -->
+  <meta http-equiv="refresh" content="30">
+
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <style>
@@ -10,40 +14,24 @@
       font-family: Arial, sans-serif;
       background: #fff;
       color: #000;
-      margin: 10px;
+      margin: 0;
       text-align: center;
     }
 
-    h1 {
-      font-size: 50px;
-      margin-bottom: 30px;
-    }
-
     .time {
-      font-size: 80px;
+      font-size: 160px;
       font-weight: bold;
-      margin: 25px 0;
-    }
-
-    .label {
-      font-size: 22px;
-      margin-bottom: 5px;
+      margin: 40px 0;
+      line-height: 1;
     }
   </style>
 </head>
 
 <body>
 
-  <h1>189 Eastbound</h1>
-
-  <div class="label">NEXT</div>
-  <div class="time">5 min</div>
-
-  <div class="label">NEXT</div>
-  <div class="time">21 min</div>
-
-  <div class="label">NEXT</div>
-  <div class="time">44 min</div>
+  <div class="time">5</div>
+  <div class="time">21</div>
+  <div class="time">44</div>
 
 </body>
 </html>

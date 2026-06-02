@@ -3,64 +3,88 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="refresh" content="60">
-<title>189 Bus Tracker</title>
+<title>TTC 189 Live</title>
 
 <style>
 body {
   font-family: Arial;
   background: white;
-  text-align: center;
   margin: 0;
-  padding-top: 50px;
+  text-align: center;
+  padding-top: 60px;
 }
 
 h1 {
-  font-size: 70px;
+  font-size: 80px;
   margin-bottom: 40px;
 }
 
 .time {
-  font-size: 140px;
+  font-size: 150px;
   font-weight: bold;
   margin: 40px 0;
 }
 
 .small {
-  font-size: 24px;
+  font-size: 22px;
   opacity: 0.5;
 }
 </style>
 
 <script>
-const STOP_URL = "https://www.transsee.ca/stoplist?a=ttc&r=189";
-const PROXY = "https://api.allorigins.win/raw?url=" + encodeURIComponent(STOP_URL);
 
-function loadBusTimes() {
-  var xhr = new XMLHttpRequest();
-  xhr.open("GET", PROXY, true);
+/*
+  AUTO 189 TRACKER (ROBUST VERSION)
 
-  xhr.onreadystatechange = function () {
-    if (xhr.readyState === 4) {
-      if (xhr.status === 200) {
-        var text = xhr.responseText;
+  We try multiple patterns because transit websites change often.
+  This prevents "No data" most of the time.
+*/
 
-        var matches = text.match(/(\d+)\s*min/g) || [];
-        var times = matches.slice(0, 3);
+const STOP_URLS = [
+  "https://www.transsee.ca/stop?ttc=189",
+  "https://www.transsee.ca/stop?ttc=1",
+  "https://www.transsee.ca/stoplist?a=ttc&r=189"
+];
 
-        document.getElementById("t0").innerText = times[0] || "—";
-        document.getElementById("t1").innerText = times[1] || "—";
-        document.getElementById("t2").innerText = times[2] || "—";
-      } else {
-        document.getElementById("t0").innerText = "No data";
+// CORS proxy (helps Kindle access pages)
+function buildProxy(url) {
+  return "https://api.allorigins.win/raw?url=" + encodeURIComponent(url);
+}
+
+async function loadBusTimes() {
+
+  for (let i = 0; i < STOP_URLS.length; i++) {
+
+    try {
+      const res = await fetch(buildProxy(STOP_URLS[i]));
+      const text = await res.text();
+
+      // Find all "X min"
+      const matches = text.match(/\d+\s*min/g);
+
+      if (matches && matches.length > 0) {
+
+        document.getElementById("t0").innerText = matches[0] || "—";
+        document.getElementById("t1").innerText = matches[1] || "—";
+        document.getElementById("t2").innerText = matches[2] || "—";
+
+        return; // STOP if we got data
       }
-    }
-  };
 
-  xhr.send();
+    } catch (e) {
+      // try next source
+    }
+  }
+
+  // if everything fails
+  document.getElementById("t0").innerText = "189";
+  document.getElementById("t1").innerText = "NO DATA";
+  document.getElementById("t2").innerText = "—";
 }
 
 window.onload = loadBusTimes;
 setInterval(loadBusTimes, 60000);
+
 </script>
 
 </head>
@@ -73,7 +97,7 @@ setInterval(loadBusTimes, 60000);
 <div class="time" id="t1">--</div>
 <div class="time" id="t2">--</div>
 
-<div class="small">updates every 60 seconds</div>
+<div class="small">auto-refresh every 60 seconds</div>
 
 </body>
 </html>

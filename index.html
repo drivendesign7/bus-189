@@ -1,38 +1,50 @@
-<script>
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="refresh" content="60">
+<title>TTC 189 Live</title>
 
-const URL = "https://www.transsee.ca/predict?s=ttc.189.4873";
-
-async function load() {
-  try {
-    const res = await fetch(URL);
-    const text = await res.text();
-
-    // grab ANY numbers that look like arrival minutes
-    const numbers = text.match(/\b\d{1,2}\b/g);
-
-    if (!numbers || numbers.length === 0) {
-      document.getElementById("t0").innerText = "189";
-      document.getElementById("t1").innerText = "NO DATA";
-      document.getElementById("t2").innerText = "";
-      return;
-    }
-
-    // filter likely arrival times (1–60 min range)
-    const mins = numbers
-      .map(n => parseInt(n))
-      .filter(n => n > 0 && n < 60);
-
-    document.getElementById("t0").innerText = (mins[0] ?? "—") + " min";
-    document.getElementById("t1").innerText = (mins[1] ?? "—") + " min";
-    document.getElementById("t2").innerText = (mins[2] ?? "—") + " min";
-
-  } catch (e) {
-    document.getElementById("t0").innerText = "189";
-    document.getElementById("t1").innerText = "NO DATA";
-  }
+<!-- 👇 THIS is where your CSS goes -->
+<style>
+body {
+  font-family: Arial;
+  background: white;
+  margin: 0;
+  text-align: center;
+  padding-top: 60px;
 }
 
-window.onload = load;
-setInterval(load, 60000);
+h1 {
+  font-size: 80px;
+}
 
+.time {
+  font-size: 150px;
+  font-weight: bold;
+}
+
+.small {
+  font-size: 22px;
+  opacity: 0.5;
+}
+</style>
+
+<!-- scripts go here too -->
+<script>
+  // your JavaScript here
 </script>
+
+</head>
+
+<body>
+
+<!-- visible stuff goes here -->
+<h1>189 BUS</h1>
+
+<div class="time" id="t0">--</div>
+<div class="time" id="t1">--</div>
+<div class="time" id="t2">--</div>
+
+</body>
+</html>

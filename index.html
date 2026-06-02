@@ -8,19 +8,30 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #fff;
-      color: #000;
+    html, body {
+      height: 100%;
       margin: 0;
+      background: #fff;
+      overflow: hidden;
+    }
+
+    /* Rotate entire screen */
+    .rotated {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(-90deg);
+      transform-origin: center;
+      white-space: nowrap;
       text-align: center;
-      white-space: nowrap; /* forces horizontal behavior */
+      font-family: Arial, sans-serif;
+      color: #000;
     }
 
     .block {
       display: inline-block;
+      margin: 40px 60px;
       vertical-align: top;
-      margin: 40px 30px;
     }
 
     .label {
@@ -39,19 +50,23 @@
 
 <body>
 
-  <div class="block">
-    <div class="label">NEXT</div>
-    <div class="time">5</div>
-  </div>
+  <div class="rotated">
 
-  <div class="block">
-    <div class="label">NEXT</div>
-    <div class="time">21</div>
-  </div>
+    <div class="block">
+      <div class="label">NEXT</div>
+      <div class="time">5</div>
+    </div>
 
-  <div class="block">
-    <div class="label">NEXT</div>
-    <div class="time">44</div>
+    <div class="block">
+      <div class="label">NEXT</div>
+      <div class="time">21</div>
+    </div>
+
+    <div class="block">
+      <div class="label">NEXT</div>
+      <div class="time">44</div>
+    </div>
+
   </div>
 
 </body>

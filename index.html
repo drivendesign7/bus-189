@@ -1,76 +1,70 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <title>189 Eastbound</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <meta http-equiv="refresh" content="60">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="refresh" content="60">
 
-  <style>
-    html, body {
-      height: 100%;
-      margin: 0;
-      background: #fff;
-      font-family: Arial, sans-serif;
-    }
+<style>
+body {
+  margin: 0;
+  background: black;
+  color: white;
+  font-family: -apple-system, Arial;
+  text-align: center;
+}
 
-    a {
-      display: block;
-      width: 100%;
-      height: 100%;
-      text-decoration: none;
-      color: #000;
-      text-align: center;
-    }
+h1 {
+  font-size: 60px;
+  margin-top: 40px;
+}
 
-    .container {
-      height: 100%;
-      display: table;
-      width: 100%;
-    }
+.time {
+  font-size: 180px;
+  font-weight: bold;
+  margin: 30px 0;
+}
 
-    .content {
-      display: table-cell;
-      vertical-align: middle;
-    }
-
-    .route {
-      font-size: 48px;
-      font-weight: bold;
-      margin-bottom: 40px;
-    }
-
-    .tap {
-      font-size: 120px;
-      font-weight: bold;
-      line-height: 1;
-    }
-
-    .small {
-      font-size: 28px;
-      margin-top: 30px;
-    }
-  </style>
+.small {
+  font-size: 24px;
+  opacity: 0.7;
+}
+</style>
 </head>
 
 <body>
 
-<a href="https://bustime.ttc.ca/predictions/bustime:189/East%20-%20189%20Stockyards%20towards%20High%20Park%20Station%20via%20Keele%20Station/7361">
+<h1>189 EASTBOUND</h1>
 
-  <div class="container">
-    <div class="content">
+<div class="small">Stop 7361 · Cobalt Ave</div>
 
-      <div class="route">189 Eastbound</div>
+<div class="time">LOADING...</div>
 
-      <div class="tap">TAP</div>
+<script>
+async function loadData() {
+  try {
+    const url = "https://bustime.ttc.ca/api/1.0/getStopPredictions?stopId=7361";
+    
+    const res = await fetch(url);
+    const data = await res.json();
 
-      <div class="small">Open Live Arrivals</div>
+    const preds = data?.data?.entry?.values?.[0]?.values || [];
 
-    </div>
-  </div>
+    if (preds.length > 0) {
+      document.querySelector(".time").innerText =
+        preds.slice(0, 3).map(p => p.minutes).join("   ");
+    } else {
+      document.querySelector(".time").innerText = "—";
+    }
+  } catch (e) {
+    document.querySelector(".time").innerText = "ERROR";
+  }
+}
 
-</a>
+loadData();
+setInterval(loadData, 30000);
+</script>
 
 </body>
 </html>

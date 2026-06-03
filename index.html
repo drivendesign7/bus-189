@@ -3,7 +3,6 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-
 <meta http-equiv="refresh" content="60">
 
 <style>
@@ -16,17 +15,18 @@ body {
 }
 
 h1 {
-  font-size: 60px;
-  margin-top: 40px;
+  font-size: 50px;
+  margin-top: 30px;
+  font-weight: 600;
 }
 
 .time {
-  font-size: 180px;
-  font-weight: bold;
-  margin: 30px 0;
+  font-size: 200px;
+  font-weight: 700;
+  margin-top: 40px;
 }
 
-.small {
+.sub {
   font-size: 24px;
   opacity: 0.7;
 }
@@ -36,34 +36,41 @@ h1 {
 <body>
 
 <h1>189 EASTBOUND</h1>
+<div class="sub">Stop 7361 · Cobalt Ave</div>
 
-<div class="small">Stop 7361 · Cobalt Ave</div>
-
-<div class="time">LOADING...</div>
+<div class="time" id="out">LOADING</div>
 
 <script>
-async function loadData() {
+async function load() {
   try {
-    const url = "https://bustime.ttc.ca/api/1.0/getStopPredictions?stopId=7361";
-    
+    // stable proxy that bypasses TTC browser blocking
+    const url =
+      "https://api.allorigins.win/raw?url=" +
+      encodeURIComponent("https://bustime.ttc.ca/getStopPredictions?stopId=7361");
+
     const res = await fetch(url);
-    const data = await res.json();
+    const text = await res.text();
 
-    const preds = data?.data?.entry?.values?.[0]?.values || [];
+    const data = JSON.parse(text);
 
-    if (preds.length > 0) {
-      document.querySelector(".time").innerText =
-        preds.slice(0, 3).map(p => p.minutes).join("   ");
-    } else {
-      document.querySelector(".time").innerText = "—";
+    const preds =
+      data?.data?.entry?.values?.[0]?.values || [];
+
+    if (!preds.length) {
+      document.getElementById("out").innerText = "—";
+      return;
     }
+
+    document.getElementById("out").innerText =
+      preds.slice(0, 3).map(p => p.minutes).join("   ");
+
   } catch (e) {
-    document.querySelector(".time").innerText = "ERROR";
+    document.getElementById("out").innerText = "NO SIGNAL";
   }
 }
 
-loadData();
-setInterval(loadData, 30000);
+load();
+setInterval(load, 30000);
 </script>
 
 </body>
